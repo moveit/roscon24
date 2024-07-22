@@ -1,0 +1,7 @@
+.git
+**/install/**/*
+**/log/**/*
+**/build/**/*
+*.pptx
+**/docker-image.tar.gz
+base-image

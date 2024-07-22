@@ -1,0 +1,5 @@
+build
+log
+install
+docker-image.tar.gz
+image.tar.gz

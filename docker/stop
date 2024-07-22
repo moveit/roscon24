@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker stop roscon-2024-moveit2-workshop
