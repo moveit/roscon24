@@ -13,7 +13,7 @@ def generate_launch_description():
     ur_driver_launch_arguments = {
         "ur_type": "ur5e",
         "robot_ip": "0.0.0.0",
-        "use_fake_hardware": "true",
+        "use_mock_hardware": "true",
         "launch_rviz": "false"
     }
 
