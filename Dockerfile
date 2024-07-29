@@ -53,6 +53,11 @@ RUN set -xe; \
       ros-jazzy-moveit \
       # UR
       ros-jazzy-ur \
+      # Exercise dependencies
+      ros-jazzy-geometric-shapes \
+      ros-jazzy-moveit-msgs \
+      ros-jazzy-shape-msgs \
+      ros-jazzy-std-msgs \
       # Utility tools
       sudo \
       git \
