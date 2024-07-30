@@ -20,9 +20,9 @@ def generate_launch_description():
 
     # MoveGroupInterface demo executable
     move_group_demo = Node(
-        name="moveit_planning",
-        package="moveit_planning",
-        executable="moveit_planning1-1",
+        name="exercise1_1",
+        package="exercise1-1",
+        executable="exercise1-1",
         output="screen",
         parameters=[
             moveit_config.robot_description,

@@ -1,6 +1,6 @@
 
 cmake_minimum_required(VERSION 3.18)
-project(moveit_planning)
+project(hot_dog)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -22,17 +22,17 @@ endforeach()
 ## Build ##
 ###########
 
-# Example 1-1
-
-add_executable(${PROJECT_NAME}1-1
-  src/exercise1-1/main.cpp
+add_library(
+    ${PROJECT_NAME} SHARED
+    src/hot_dog_collision_object.cpp
 )
 
-target_include_directories(${PROJECT_NAME}1-1
+ament_target_dependencies(${PROJECT_NAME} ${THIS_PACKAGE_INCLUDE_DEPENDS})
+target_include_directories(${PROJECT_NAME}
     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
            $<INSTALL_INTERFACE:include>)
 
-target_compile_options(${PROJECT_NAME}1-1
+target_compile_options(${PROJECT_NAME}
   PRIVATE
   -Wall
   -Wextra
@@ -58,12 +58,12 @@ target_compile_options(${PROJECT_NAME}1-1
   -Wimplicit-fallthrough
 )
 
-target_compile_features(${PROJECT_NAME}1-1
+target_compile_features(${PROJECT_NAME}
   PRIVATE
   cxx_std_17
 )
 
-ament_target_dependencies(${PROJECT_NAME}1-1 ${THIS_PACKAGE_INCLUDE_DEPENDS})
+ament_target_dependencies(${PROJECT_NAME} ${THIS_PACKAGE_INCLUDE_DEPENDS})
 
 
 #############
@@ -71,21 +71,21 @@ ament_target_dependencies(${PROJECT_NAME}1-1 ${THIS_PACKAGE_INCLUDE_DEPENDS})
 #############
 
 install(
-    TARGETS ${PROJECT_NAME}1-1
+    TARGETS ${PROJECT_NAME}
     EXPORT ${PROJECT_NAME}Targets
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
+
 install(
-  DIRECTORY launch
-  DESTINATION share/${PROJECT_NAME})
+  DIRECTORY include/
+  DESTINATION include)
 
 install(
   DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../../../assets/hotdog
   DESTINATION share/${PROJECT_NAME})
-
 
 ament_export_targets(${PROJECT_NAME}Targets HAS_LIBRARY_TARGET)
 ament_export_dependencies(${THIS_PACKAGE_INCLUDE_DEPENDS})

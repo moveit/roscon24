@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package format="3">
+    <name>exercise1-2</name>
+    <version>0.0.1</version>
+    <description>A MoveIt Cartesian planning example</description>
+
+    <maintainer email="stephanie@stephanieeng.ca">Stephanie Eng</maintainer>
+    <author email="stephanie@stephanieeng.ca">Stephanie Eng</author>
+
+    <license>Apache-2.0</license>
+
+    <buildtool_depend>ament_cmake</buildtool_depend>
+
+    <depend>rclcpp</depend>
+    <depend>hot_dog</depend>
+    <depend>moveit_msgs</depend>
+    <depend>moveit_ros_planning_interface</depend>
+    <exec_depend>ur_moveit_config</exec_depend>
+    <exec_depend>ur_robot_driver</exec_depend>
+    <exec_depend>ur_description</exec_depend>
+
+    <export>
+        <build_type>ament_cmake</build_type>
+    </export>
+</package>
