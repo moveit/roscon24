@@ -10,6 +10,7 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
   moveit_msgs
   moveit_ros_planning_interface
   rclcpp
+  tf2_geometry_msgs
 )
 
 foreach(Dependency IN ITEMS ${THIS_PACKAGE_INCLUDE_DEPENDS})

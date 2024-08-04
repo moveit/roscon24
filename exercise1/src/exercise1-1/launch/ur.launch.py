@@ -22,9 +22,10 @@ def generate_launch_description():
         launch_arguments=ur_driver_launch_arguments.items()
     )
 
+    # TODO: disable RViz here and launch it in custom exercise RViz so we can use a custom config with the goal visualization turned off
     ur_moveit_launch_arguments = {
         "ur_type": "ur5e",
-        "launch_rviz": "true"
+        "launch_rviz": "true" 
     }
 
     launch_ur_moveit = IncludeLaunchDescription(

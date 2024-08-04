@@ -10,6 +10,7 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
   moveit_msgs
   moveit_ros_planning_interface
   rclcpp
+  tf2_geometry_msgs
 )
 foreach(Dependency IN ITEMS ${THIS_PACKAGE_INCLUDE_DEPENDS})
   find_package(${Dependency} REQUIRED)
@@ -19,9 +20,21 @@ endforeach()
 ## Build ##
 ###########
 
-add_executable(${PROJECT_NAME}
+add_library(
+    ${PROJECT_NAME} SHARED
+    src/motion_planning.cpp
+)
+ament_target_dependencies(${PROJECT_NAME} ${THIS_PACKAGE_INCLUDE_DEPENDS})
+target_include_directories(${PROJECT_NAME}
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+           $<INSTALL_INTERFACE:include>)
+
+
+add_executable(${PROJECT_NAME}_node
   src/main.cpp
 )
+
+target_link_libraries(${PROJECT_NAME}_node ${PROJECT_NAME})
 
 ament_target_dependencies(${PROJECT_NAME} ${THIS_PACKAGE_INCLUDE_DEPENDS})
 
@@ -64,7 +77,7 @@ ament_target_dependencies(${PROJECT_NAME} ${THIS_PACKAGE_INCLUDE_DEPENDS})
 #############
 
 install(
-    TARGETS ${PROJECT_NAME}
+    TARGETS ${PROJECT_NAME}  ${PROJECT_NAME}_node
     EXPORT ${PROJECT_NAME}Targets
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib

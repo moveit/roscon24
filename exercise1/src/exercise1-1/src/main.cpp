@@ -23,17 +23,19 @@ int main(int argc, char* argv[])
   moveit_msgs::msg::CollisionObject bun = hot_dog::HotDogFactory::createBun();
   moveit_msgs::msg::CollisionObject sausage = hot_dog::HotDogFactory::createOffsetSausage();
 
-  hot_dog::HotDogFactory::addCollisionObjectsToScene(planning_scene_interface, { bun, sausage });
+  // TODO fix
+  // hot_dog::HotDogFactory::addCollisionObjectsToScene(planning_scene_interface, { bun, sausage });
 
+  // TODO update with new sausage positions
   // A pose just above the sausage
   geometry_msgs::msg::Pose pick_pose;
   pick_pose.orientation.x = 1.0;
   pick_pose.orientation.y = 0.0;
   pick_pose.orientation.z = 0.0;
   pick_pose.orientation.w = 0.0;
-  pick_pose.position.x = 0.25;
+  pick_pose.position.x = 0.3;
   pick_pose.position.y = 0.4;
-  pick_pose.position.z = 0.05;
+  pick_pose.position.z = 0.1;
 
   // A pose just above the bun
   geometry_msgs::msg::Pose place_pose;
@@ -41,7 +43,7 @@ int main(int argc, char* argv[])
   place_pose.orientation.y = 0.0;
   place_pose.orientation.z = 0.0;
   place_pose.orientation.w = 0.0;
-  place_pose.position.x = 0.25;
+  place_pose.position.x = 0.3;
   place_pose.position.y = 0.0;
   place_pose.position.z = 0.15;
 
@@ -90,16 +92,16 @@ int main(int argc, char* argv[])
     }
     // Exercise 1-1: Detach the hot dog
     move_group_interface.detachObject(sausage.id);
+
+    // TODO: consider using ACM to allow robot and sausage bun collisions
+    // Teleport the hot dog
+    // hot_dog::HotDogFactory::addCollisionObjectsToScene(planning_scene_interface,
+    //                                                    { hot_dog::HotDogFactory::createSausage() });
   }
   else
   {
     RCLCPP_ERROR(logger, "Pick planning failed!");
   }
-
-  // TODO: consider using ACM to allow robot and sausage bun collisions
-  // Teleport the hot dog
-  hot_dog::HotDogFactory::addCollisionObjectsToScene(planning_scene_interface,
-                                                     { hot_dog::HotDogFactory::createSausage() });
 
   // Shutdown ROS
   rclcpp::shutdown();
