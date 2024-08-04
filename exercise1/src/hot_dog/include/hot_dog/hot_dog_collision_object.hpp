@@ -21,6 +21,9 @@ public:
   /* @brief Creates a collision object for some mustard */
   static moveit_msgs::msg::CollisionObject createMustard();
 
+  /* @brief Creates a collision object for a mustard bottle */
+  static moveit_msgs::msg::CollisionObject createMustardBottle();
+
   /* @brief Apply collision objects with some predefined colors for hot dogs */
   static void addCollisionObjectsToScene(moveit::planning_interface::PlanningSceneInterface& psi,
                                          const std::vector<moveit_msgs::msg::CollisionObject>& collision_objects);

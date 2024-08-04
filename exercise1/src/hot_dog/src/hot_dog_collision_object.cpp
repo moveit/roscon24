@@ -64,6 +64,18 @@ moveit_msgs::msg::CollisionObject HotDogFactory::createMustard()
   return HotDogFactory::createCollisionObject("mustard", "package://hot_dog/hotdog/mustard.dae", mustard_pose);
 }
 
+moveit_msgs::msg::CollisionObject HotDogFactory::createMustardBottle()
+{
+  // Spawn at origin since the mustard bottle is really only meant to be an attached collision object
+  geometry_msgs::msg::Pose mustard_bottle_pose;
+  mustard_bottle_pose.orientation.w = 1.0;
+  mustard_bottle_pose.position.x = 0.0;
+  mustard_bottle_pose.position.y = 0.0;
+  mustard_bottle_pose.position.z = 0.0;
+  return HotDogFactory::createCollisionObject("mustard_bottle", "package://hot_dog/mustard-bottle/mustard-bottle.dae",
+                                              mustard_bottle_pose);
+}
+
 void HotDogFactory::addCollisionObjectsToScene(moveit::planning_interface::PlanningSceneInterface& psi,
                                                const std::vector<moveit_msgs::msg::CollisionObject>& collision_objects)
 {
@@ -87,6 +99,13 @@ void HotDogFactory::addCollisionObjectsToScene(moveit::planning_interface::Plann
   mustard_color.color.b = 0.109f;
   mustard_color.color.a = 1.0f;
   mustard_color.id = "mustard";
+
+  moveit_msgs::msg::ObjectColor mustard_bottle_color;
+  mustard_color.color.r = 0.906f;
+  mustard_color.color.g = 0.833f;
+  mustard_color.color.b = 0.109f;
+  mustard_color.color.a = 1.0f;
+  mustard_color.id = "mustard_bottle";
 
   const std::vector<moveit_msgs::msg::ObjectColor> hotdog_colors{ bun_color, sausage_color, mustard_color };
   psi.applyCollisionObjects(collision_objects, hotdog_colors);

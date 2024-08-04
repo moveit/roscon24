@@ -71,11 +71,11 @@ ament_target_dependencies(${PROJECT_NAME} ${THIS_PACKAGE_INCLUDE_DEPENDS})
 #############
 
 install(
-    TARGETS ${PROJECT_NAME}
-    EXPORT ${PROJECT_NAME}Targets
-    ARCHIVE DESTINATION lib
-    LIBRARY DESTINATION lib
-    RUNTIME DESTINATION lib/${PROJECT_NAME}
+  TARGETS ${PROJECT_NAME}
+  EXPORT ${PROJECT_NAME}Targets
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
 
@@ -84,7 +84,9 @@ install(
   DESTINATION include)
 
 install(
-  DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../../../assets/hotdog
+  DIRECTORY
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../assets/hotdog
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../assets/mustard-bottle
   DESTINATION share/${PROJECT_NAME})
 
 ament_export_targets(${PROJECT_NAME}Targets HAS_LIBRARY_TARGET)
