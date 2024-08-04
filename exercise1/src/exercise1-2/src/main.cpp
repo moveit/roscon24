@@ -21,75 +21,44 @@ int main(int argc, char* argv[])
 
   PlanningSceneInterface planning_scene_interface;
   moveit_msgs::msg::CollisionObject bun = hot_dog::HotDogFactory::createBun();
-  moveit_msgs::msg::CollisionObject sausage = hot_dog::HotDogFactory::createOffsetSausage();
-
-  hot_dog::HotDogFactory::addCollisionObjectsToScene(planning_scene_interface, { bun, sausage });
-
-  // A pose just above the sausage
-  geometry_msgs::msg::Pose pick_pose;
-  pick_pose.orientation.x = 1.0;
-  pick_pose.orientation.y = 0.0;
-  pick_pose.orientation.z = 0.0;
-  pick_pose.orientation.w = 0.0;
-  pick_pose.position.x = 0.25;
-  pick_pose.position.y = 0.4;
-  pick_pose.position.z = 0.05;
-
-  // A pose just above the bun
-  geometry_msgs::msg::Pose place_pose;
-  place_pose.orientation.x = 1.0;
-  place_pose.orientation.y = 0.0;
-  place_pose.orientation.z = 0.0;
-  place_pose.orientation.w = 0.0;
-  place_pose.position.x = 0.25;
-  place_pose.position.y = 0.0;
-  place_pose.position.z = 0.15;
+  moveit_msgs::msg::CollisionObject sausage = hot_dog::HotDogFactory::createSausage();
+  moveit_msgs::msg::CollisionObject mustard = hot_dog::HotDogFactory::createMustard();
+  moveit_msgs::msg::CollisionObject mustard_bottle = hot_dog::HotDogFactory::createMustardBottle();
 
   auto move_group_interface = MoveGroupInterface(node, "ur_manipulator");
-  rclcpp_action::Client<moveit_msgs::action::MoveGroup>& move_group_client = move_group_interface.getMoveGroupClient();
 
-  // Exercise 1-1: Move to the hot dog
+  // Spawn the mustard bottle attached to the end effector
+  // mustard_bottle.pose = move_group_interface.getCurrentPose().pose;
+  hot_dog::HotDogFactory::addCollisionObjectsToScene(planning_scene_interface, { bun, sausage, mustard_bottle });
+
+  // moveit_msgs::msg::AttachedCollisionObject attached_mustard_bottle;
+  // attached_mustard_bottle.object = mustard_bottle;
+  // attached_mustard_bottle.link_name = move_group_interface.getEndEffectorLink();
+
+  // planning_scene_interface.applyAttachedCollisionObject(attached_mustard_bottle);
+
+  // A pose just above the bun
+  geometry_msgs::msg::Pose start_pose;
+  start_pose.orientation.x = 1.0;
+  start_pose.orientation.y = 0.0;
+  start_pose.orientation.z = 0.0;
+  start_pose.orientation.w = 0.0;
+  start_pose.position.x = 0.25;
+  start_pose.position.y = 0.0;
+  start_pose.position.z = 0.3;
+
+  // Exercise 1-2: Move to the hot dog
   // Use the MoveGroupInterface to move to the pick pose
-  move_group_interface.setPoseTarget(pick_pose);
+  move_group_interface.setPoseTarget(start_pose);
 
   // Create a plan to that target pose
-  MoveGroupInterface::Plan pick_plan;
-  const auto pick_success = static_cast<bool>(move_group_interface.plan(pick_plan));
+  MoveGroupInterface::Plan start_plan;
+  const auto start_move_success = static_cast<bool>(move_group_interface.plan(start_plan));
 
-  if (pick_success)
+  if (start_move_success)
   {
     // Execute the plan
-    move_group_interface.execute(pick_plan);
-
-    // Wait for the execution to finish before attaching objects
-    while (!move_group_client.action_server_is_ready())
-    {
-      std::this_thread::sleep_for(std::chrono::milliseconds(5));
-    }
-
-    // Exercise 1-1: Attach the hot dog to the gripper and plan to the place pose
-    // TODO we need a gripper
-    move_group_interface.attachObject(sausage.id);
-    move_group_interface.setPoseTarget(place_pose);
-
-    MoveGroupInterface::Plan place_plan;
-    const auto place_success = static_cast<bool>(move_group_interface.plan(place_plan));
-    // Execute the plan
-    if (place_success)
-    {
-      move_group_interface.execute(place_plan);
-    }
-    else
-    {
-      RCLCPP_ERROR(logger, "Place planning failed!");
-    }
-
-    while (!move_group_client.action_server_is_ready())
-    {
-      std::this_thread::sleep_for(std::chrono::milliseconds(5));
-    }
-    // Exercise 1-1: Detach the hot dog
-    move_group_interface.detachObject(sausage.id);
+    move_group_interface.execute(start_plan);
   }
   else
   {
@@ -98,8 +67,7 @@ int main(int argc, char* argv[])
 
   // TODO: consider using ACM to allow robot and sausage bun collisions
   // Teleport the hot dog
-  hot_dog::HotDogFactory::addCollisionObjectsToScene(planning_scene_interface,
-                                                     { hot_dog::HotDogFactory::createSausage() });
+  hot_dog::HotDogFactory::addCollisionObjectsToScene(planning_scene_interface, { mustard });
 
   // Shutdown ROS
   rclcpp::shutdown();

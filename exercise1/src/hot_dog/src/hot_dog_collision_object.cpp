@@ -11,8 +11,8 @@ moveit_msgs::msg::CollisionObject HotDogFactory::createCollisionObject(const std
   collision_object.header.frame_id = "world";
   collision_object.id = name;
 
-  shapes::Mesh* m = shapes::createMeshFromResource(mesh_path);
-  m->scale(0.05);  // Full size hot dog is much too large and must be scaled
+  // Full size hot dog is much too large and must be scaled
+  shapes::Mesh* m = shapes::createMeshFromResource(mesh_path, { 0.05, 0.05, 0.05 });
   shapes::ShapeMsg mesh_msg;
   shapes::constructMsgFromShape(m, mesh_msg);
   const auto mesh = boost::get<shape_msgs::msg::Mesh>(mesh_msg);
@@ -30,7 +30,7 @@ moveit_msgs::msg::CollisionObject HotDogFactory::createBun()
   bun_pose.orientation.w = 1.0;
   bun_pose.position.x = 0.3;
   bun_pose.position.y = 0.0;
-  bun_pose.position.z = 0.2;
+  bun_pose.position.z = 0.0;
   return HotDogFactory::createCollisionObject("bun", "package://hot_dog/hotdog/bun.dae", bun_pose);
 }
 
@@ -38,9 +38,9 @@ moveit_msgs::msg::CollisionObject HotDogFactory::createOffsetSausage()
 {
   geometry_msgs::msg::Pose offset_sausage_pose;
   offset_sausage_pose.orientation.w = 1.0;
-  offset_sausage_pose.position.x = 0.25;
-  offset_sausage_pose.position.y = 0.445;
-  offset_sausage_pose.position.z = 0.04;
+  offset_sausage_pose.position.x = 0.3;
+  offset_sausage_pose.position.y = 0.4;
+  offset_sausage_pose.position.z = 0.0;
   return HotDogFactory::createCollisionObject("sausage", "package://hot_dog/hotdog/sausage.dae", offset_sausage_pose);
 }
 
@@ -48,9 +48,9 @@ moveit_msgs::msg::CollisionObject HotDogFactory::createSausage()
 {
   geometry_msgs::msg::Pose sausage_pose;
   sausage_pose.orientation.w = 1.0;
-  sausage_pose.position.x = 0.25;
-  sausage_pose.position.y = 0.045;
-  sausage_pose.position.z = 0.04;
+  sausage_pose.position.x = 0.3;
+  sausage_pose.position.y = 0.0;
+  sausage_pose.position.z = 0.0;
   return HotDogFactory::createCollisionObject("sausage", "package://hot_dog/hotdog/sausage.dae", sausage_pose);
 }
 
@@ -59,8 +59,8 @@ moveit_msgs::msg::CollisionObject HotDogFactory::createMustard()
   geometry_msgs::msg::Pose mustard_pose;
   mustard_pose.orientation.w = 1.0;
   mustard_pose.position.x = 0.3;
-  mustard_pose.position.y = 0.035;
-  mustard_pose.position.z = -0.305;
+  mustard_pose.position.y = 0.0;
+  mustard_pose.position.z = 0.0;
   return HotDogFactory::createCollisionObject("mustard", "package://hot_dog/hotdog/mustard.dae", mustard_pose);
 }
 
@@ -69,8 +69,8 @@ moveit_msgs::msg::CollisionObject HotDogFactory::createMustardBottle()
   // Spawn at origin since the mustard bottle is really only meant to be an attached collision object
   geometry_msgs::msg::Pose mustard_bottle_pose;
   mustard_bottle_pose.orientation.w = 1.0;
-  mustard_bottle_pose.position.x = 0.0;
-  mustard_bottle_pose.position.y = 0.0;
+  mustard_bottle_pose.position.x = 0.3;
+  mustard_bottle_pose.position.y = 0.3;
   mustard_bottle_pose.position.z = 0.0;
   return HotDogFactory::createCollisionObject("mustard_bottle", "package://hot_dog/mustard-bottle/mustard-bottle.dae",
                                               mustard_bottle_pose);
@@ -101,13 +101,14 @@ void HotDogFactory::addCollisionObjectsToScene(moveit::planning_interface::Plann
   mustard_color.id = "mustard";
 
   moveit_msgs::msg::ObjectColor mustard_bottle_color;
-  mustard_color.color.r = 0.906f;
-  mustard_color.color.g = 0.833f;
-  mustard_color.color.b = 0.109f;
-  mustard_color.color.a = 1.0f;
-  mustard_color.id = "mustard_bottle";
+  mustard_bottle_color.color.r = 0.906f;
+  mustard_bottle_color.color.g = 0.833f;
+  mustard_bottle_color.color.b = 0.109f;
+  mustard_bottle_color.color.a = 1.0f;
+  mustard_bottle_color.id = "mustard_bottle";
 
-  const std::vector<moveit_msgs::msg::ObjectColor> hotdog_colors{ bun_color, sausage_color, mustard_color };
+  const std::vector<moveit_msgs::msg::ObjectColor> hotdog_colors{ bun_color, sausage_color, mustard_color,
+                                                                  mustard_bottle_color };
   psi.applyCollisionObjects(collision_objects, hotdog_colors);
 }
 }  // namespace hot_dog

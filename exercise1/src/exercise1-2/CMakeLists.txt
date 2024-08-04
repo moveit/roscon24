@@ -5,9 +5,12 @@ project(exercise1-2)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(THIS_PACKAGE_INCLUDE_DEPENDS
-hot_dog
+  ament_cmake
+  hot_dog
+  moveit_msgs
+  moveit_ros_planning_interface
+  rclcpp
 )
-
 foreach(Dependency IN ITEMS ${THIS_PACKAGE_INCLUDE_DEPENDS})
   find_package(${Dependency} REQUIRED)
 endforeach()
@@ -67,6 +70,10 @@ install(
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
+
+install(
+  DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME})
 
 ament_export_targets(${PROJECT_NAME}Targets HAS_LIBRARY_TARGET)
 ament_export_dependencies(${THIS_PACKAGE_INCLUDE_DEPENDS})
