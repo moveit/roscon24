@@ -1,27 +1,29 @@
 #include <memory>
-
+#include <string>
 #include <rclcpp/rclcpp.hpp>
 
-#include <motion_planning/motion_planning.h>
+#include <hot_dog_scenario/hot_dog_scenario.hpp>
 
 int main(int argc, char* argv[])
 {
   // Initialize ROS and create the Node
   rclcpp::init(argc, argv);
 
-  rclcpp::NodeOptions options;
-  options.automatically_declare_parameters_from_overrides(true);
+  const auto node = std::make_shared<rclcpp::Node>(
+    "exercise1-2",
+    rclcpp::NodeOptions().automatically_declare_parameters_from_overrides(true)
+  );
+  HotDogScenario hot_dog_scenario(node);
 
-  MotionPlanning motion_planning("hot_dog_with_mustard", options);
-
-  rclcpp::executors::MultiThreadedExecutor executor;
-  auto spin_thread = std::thread([&executor, &motion_planning]() {
-    executor.add_node(motion_planning.getNodeBaseInterface());
-    executor.spin();
-    executor.remove_node(motion_planning.getNodeBaseInterface());
+  auto spin_thread = std::thread([&node]() {
+    rclcpp::spin(node);
   });
 
-  motion_planning.setUpScene();
+  const std::string planning_group {"ur_manipulator"};
+
+  hot_dog_scenario.placeMustardinEE();
+
+  MoveGroupInterface move_group_interface(node, planning_group);
 
   // A pose just above the bun
   geometry_msgs::msg::Pose start_pose;
@@ -33,12 +35,14 @@ int main(int argc, char* argv[])
   start_pose.position.y = 0.0;  // TODO this will look off until we have a proper gripper
   start_pose.position.z = 0.15;
 
+  move_group_interface.setPoseTarget(start_pose);
+
   MoveGroupInterface::Plan start_plan;
-  const bool success = motion_planning.plan(start_pose, start_plan);
+  const bool success = static_cast<bool> (move_group_interface.plan(start_plan));
   if (success)
   {
-    motion_planning.execute(start_plan);
-    motion_planning.applyMustard();
+    move_group_interface.execute(start_plan);
+    hot_dog_scenario.applyMustard();
   }
 
   spin_thread.join();
