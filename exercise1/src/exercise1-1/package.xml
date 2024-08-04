@@ -12,10 +12,9 @@
     <buildtool_depend>ament_cmake</buildtool_depend>
 
     <depend>rclcpp</depend>
-    <depend>hot_dog</depend>
     <depend>moveit_msgs</depend>
     <depend>moveit_ros_planning_interface</depend>
-    <depend>tf2_geometry_msgs</depend>
+    <exec_depend>hot_dog</exec_depend>
     <exec_depend>ur_moveit_config</exec_depend>
     <exec_depend>ur_robot_driver</exec_depend>
     <exec_depend>ur_description</exec_depend>
