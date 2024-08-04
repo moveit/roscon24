@@ -11,11 +11,16 @@ int main(int argc, char* argv[])
   // Initialize ROS and create the node
   rclcpp::init(argc, argv);
   const auto node = std::make_shared<rclcpp::Node>(
-      "exercise1-1", rclcpp::NodeOptions().automatically_declare_parameters_from_overrides(true));
+      "exercise1_1", rclcpp::NodeOptions().automatically_declare_parameters_from_overrides(true));
+
+  // Spin the node
+  auto spin_thread = std::thread([&node]() { rclcpp::spin(node); });
+
   HotDogScenario hot_dog_scenario(node);
+  hot_dog_scenario.placeHotDog();
 
   // Create a ROS logger
-  const auto logger = rclcpp::get_logger("exercise1-1");
+  const auto logger = rclcpp::get_logger("exercise1_1");
 
   // Create the MoveGroupInterface
   using moveit::planning_interface::MoveGroupInterface;
@@ -25,9 +30,6 @@ int main(int argc, char* argv[])
   // Get predefined poses for pick and place above the sausage and bun respectively
   const auto pick_pose = hot_dog_scenario.getPickPose();
   const auto place_pose = hot_dog_scenario.getPlacePose();
-
-  // TODO do I need this?
-  rclcpp_action::Client<moveit_msgs::action::MoveGroup>& move_group_client = move_group_interface.getMoveGroupClient();
 
   // Exercise 1-1: Move to the pick pose
   // Use the MoveGroupInterface to move to the pick pose
@@ -41,12 +43,6 @@ int main(int argc, char* argv[])
   {
     // Execute the plan
     move_group_interface.execute(pick_plan);
-
-    // Wait for the execution to finish before attaching objects
-    // while (!move_group_client.action_server_is_ready())
-    // {
-    //   std::this_thread::sleep_for(std::chrono::milliseconds(5));
-    // }
 
     const auto& sausage = hot_dog_scenario.getSausage();
 
@@ -67,16 +63,13 @@ int main(int argc, char* argv[])
       RCLCPP_ERROR(logger, "Place planning failed!");
     }
 
-    while (!move_group_client.action_server_is_ready())
-    {
-      std::this_thread::sleep_for(std::chrono::milliseconds(5));
-    }
     // Exercise 1-1: Detach the hot dog
     move_group_interface.detachObject(sausage.id);
+    if (place_success)
 
-    // TODO: consider using ACM to allow robot and sausage bun collisions
-    // Drop the hot dog down into the bun
-    hot_dog_scenario.placeSausage();
+      // TODO: consider using ACM to allow robot and sausage bun collisions
+      // Drop the hot dog down into the bun
+      hot_dog_scenario.placeSausage();
   }
   else
   {
@@ -84,6 +77,7 @@ int main(int argc, char* argv[])
   }
 
   // Shutdown ROS
+  spin_thread.join();
   rclcpp::shutdown();
   return 0;
 }

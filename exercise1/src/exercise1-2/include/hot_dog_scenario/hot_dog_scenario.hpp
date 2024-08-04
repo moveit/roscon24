@@ -25,6 +25,8 @@ public:
 
   static geometry_msgs::msg::Pose getStartPose();
 
+  static std::vector<geometry_msgs::msg::Pose> getMustardWaypoints(geometry_msgs::msg::Pose pose);
+
 private:
   rclcpp::Node::SharedPtr node_;
 

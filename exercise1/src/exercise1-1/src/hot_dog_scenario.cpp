@@ -33,11 +33,12 @@ geometry_msgs::msg::Pose HotDogScenario::getPickPose()
   pick_pose.orientation.y = 0.0;
   pick_pose.orientation.z = 0.0;
   pick_pose.orientation.w = 0.0;
-  pick_pose.position.x = 0.3;
+  pick_pose.position.x = 0.5;
   pick_pose.position.y = 0.4;
   pick_pose.position.z = 0.1;
   return pick_pose;
 }
+
 geometry_msgs::msg::Pose HotDogScenario::getPlacePose()
 {
   geometry_msgs::msg::Pose place_pose;
@@ -45,9 +46,9 @@ geometry_msgs::msg::Pose HotDogScenario::getPlacePose()
   place_pose.orientation.y = 0.0;
   place_pose.orientation.z = 0.0;
   place_pose.orientation.w = 0.0;
-  place_pose.position.x = 0.3;
+  place_pose.position.x = 0.5;
   place_pose.position.y = 0.0;
-  place_pose.position.z = 0.15;
+  place_pose.position.z = 0.17;
   return place_pose;
 }
 

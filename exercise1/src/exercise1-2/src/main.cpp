@@ -10,13 +10,14 @@ int main(int argc, char* argv[])
   // Initialize ROS and create the node
   rclcpp::init(argc, argv);
   const auto node = std::make_shared<rclcpp::Node>(
-      "exercise1-2", rclcpp::NodeOptions().automatically_declare_parameters_from_overrides(true));
-  HotDogScenario hot_dog_scenario(node);
+      "exercise1_2", rclcpp::NodeOptions().automatically_declare_parameters_from_overrides(true));
 
   // Spin the node
   auto spin_thread = std::thread([&node]() { rclcpp::spin(node); });
 
   // Start this scenario by placing the mustard bottle in the end effector
+  HotDogScenario hot_dog_scenario(node);
+  hot_dog_scenario.placeHotDog();
   hot_dog_scenario.placeMustardinEE();
 
   // Create the MoveGroupInterface
@@ -33,7 +34,20 @@ int main(int argc, char* argv[])
   if (success)
   {
     move_group_interface.execute(start_plan);
-    hot_dog_scenario.applyMustard();
+
+    const std::vector<geometry_msgs::msg::Pose> waypoints = hot_dog_scenario.getMustardWaypoints(start_pose);
+
+    // Exercise 1-2 Plan a Caresian path
+    const double jump_threshold = 0.0;
+    const double eef_step = 0.002;
+
+    moveit_msgs::msg::RobotTrajectory trajectory;
+    double fraction = move_group_interface.computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
+    if (fraction > 0)
+    {
+      move_group_interface.execute(trajectory);
+      hot_dog_scenario.applyMustard();
+    }
   }
 
   spin_thread.join();

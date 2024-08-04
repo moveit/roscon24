@@ -27,7 +27,10 @@ void HotDogScenario::placeMustardinEE()
 {
   // Spawn the mustard bottle attached to the end effector
   mustard_bottle_.pose = move_group_interface_->getCurrentPose().pose;
-  mustard_bottle_.pose.position.y += 0.1;
+
+  // Note that this offset is done in world frame, and thus won't work if the robot start position isn't as expected
+  // This won't be needed if we get a gripper
+  mustard_bottle_.pose.position.y += 0.03;  // TODO: dependent on gripper
 
   // Rotate the mustard bottle to fit into the gripper
   tf2::Quaternion relative_rotation;
@@ -38,7 +41,9 @@ void HotDogScenario::placeMustardinEE()
   mustard_bottle_.pose.orientation = tf2::toMsg(new_orientation);
 
   planning_scene_interface_.applyCollisionObjects({ mustard_bottle_ }, hot_dog_colors_);
-  move_group_interface_->attachObject(mustard_bottle_.id);
+
+  // TODO: Dependent on gripper
+  move_group_interface_->attachObject(mustard_bottle_.id, "tool0", { "wrist_3_link" });
 }
 
 void HotDogScenario::applyMustard()
@@ -53,10 +58,51 @@ geometry_msgs::msg::Pose HotDogScenario::getStartPose()
   start_pose.orientation.y = 0.707;
   start_pose.orientation.z = 0.0;
   start_pose.orientation.w = 0.707;
-  start_pose.position.x = 0.38;
+  start_pose.position.x = 0.5;
   start_pose.position.y = 0.0;  // TODO this will look off until we have a proper gripper
-  start_pose.position.z = 0.15;
+  start_pose.position.z = 0.2;
   return start_pose;
+}
+
+std::vector<geometry_msgs::msg::Pose> HotDogScenario::getMustardWaypoints(geometry_msgs::msg::Pose pose)
+{
+  std::vector<geometry_msgs::msg::Pose> waypoints;
+
+  // Waypoint 1
+  pose.position.x += 0.01;
+  pose.position.y += 0.005;
+  waypoints.push_back(pose);
+
+  // Waypoint 2
+  pose.position.x += 0.01;
+  pose.position.y -= 0.01;
+  waypoints.push_back(pose);
+
+  // Waypoint 3
+  pose.position.x += 0.01;
+  pose.position.y += 0.01;
+  waypoints.push_back(pose);
+
+  // Waypoint 4
+  pose.position.x += 0.01;
+  pose.position.y -= 0.01;
+  waypoints.push_back(pose);
+
+  // Waypoint 5
+  pose.position.x += 0.01;
+  pose.position.y += 0.01;
+  waypoints.push_back(pose);
+
+  // Waypoint 6
+  pose.position.x += 0.01;
+  pose.position.y -= 0.01;
+  waypoints.push_back(pose);
+
+  pose.position.x += 0.01;
+  pose.position.y += 0.005;
+  waypoints.push_back(pose);
+
+  return waypoints;
 }
 
 moveit_msgs::msg::CollisionObject HotDogScenario::createCollisionObject(const std::string& name,
@@ -84,7 +130,7 @@ moveit_msgs::msg::CollisionObject HotDogScenario::createBun()
 {
   geometry_msgs::msg::Pose bun_pose;
   bun_pose.orientation.w = 1.0;
-  bun_pose.position.x = 0.5;
+  bun_pose.position.x = 0.55;
   bun_pose.position.y = 0.0;
   bun_pose.position.z = 0.0;
   return createCollisionObject("bun", "package://hot_dog/hotdog/bun.dae", bun_pose);
@@ -94,7 +140,7 @@ moveit_msgs::msg::CollisionObject HotDogScenario::createSausage()
 {
   geometry_msgs::msg::Pose sausage_pose;
   sausage_pose.orientation.w = 1.0;
-  sausage_pose.position.x = 0.5;
+  sausage_pose.position.x = 0.55;
   sausage_pose.position.y = 0.0;
   sausage_pose.position.z = 0.0;
   return createCollisionObject("sausage", "package://hot_dog/hotdog/sausage.dae", sausage_pose);
@@ -104,7 +150,7 @@ moveit_msgs::msg::CollisionObject HotDogScenario::createMustard()
 {
   geometry_msgs::msg::Pose mustard_pose;
   mustard_pose.orientation.w = 1.0;
-  mustard_pose.position.x = 0.5;
+  mustard_pose.position.x = 0.55;
   mustard_pose.position.y = 0.0;
   mustard_pose.position.z = 0.0;
   return createCollisionObject("mustard", "package://hot_dog/hotdog/mustard.dae", mustard_pose);
@@ -112,10 +158,9 @@ moveit_msgs::msg::CollisionObject HotDogScenario::createMustard()
 
 moveit_msgs::msg::CollisionObject HotDogScenario::createMustardBottle()
 {
-  // Spawn at origin since the mustard bottle is really only meant to be an attached collision object
   geometry_msgs::msg::Pose mustard_bottle_pose;
   mustard_bottle_pose.orientation.w = 1.0;
-  mustard_bottle_pose.position.x = 0.5;
+  mustard_bottle_pose.position.x = 0.55;
   mustard_bottle_pose.position.y = -0.3;
   mustard_bottle_pose.position.z = 0.0;
   return createCollisionObject("mustard_bottle", "package://hot_dog/mustard-bottle/mustard-bottle.dae",
