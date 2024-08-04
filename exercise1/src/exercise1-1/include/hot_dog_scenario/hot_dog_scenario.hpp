@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <vector>
+
 #include <geometry_msgs/msg/pose.hpp>
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <moveit/planning_scene_interface/planning_scene_interface.h>
@@ -17,13 +18,14 @@ public:
   // Place the bun and sausage in the scene
   void placeHotDog();
 
-  // Place the mustard bottle in the end effector
-  void placeMustardinEE();
+  // Place the bun and sausage in the scene
+  void placeSausage();
 
-  // Place mustard on the hot dog
-  void applyMustard();
+  // TODO update with new sausage positions
+  static geometry_msgs::msg::Pose getPickPose();
+  static geometry_msgs::msg::Pose getPlacePose();
 
-  static geometry_msgs::msg::Pose getStartPose();
+  moveit_msgs::msg::CollisionObject getSausage() const;
 
 private:
   rclcpp::Node::SharedPtr node_;

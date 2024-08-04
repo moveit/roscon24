@@ -2,6 +2,34 @@
 cmake_minimum_required(VERSION 3.18)
 project(exercise1-2)
 
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(
+    -Wall
+    -Wextra
+    -Wshadow
+    -Wnon-virtual-dtor
+    -pedantic
+
+    -Wold-style-cast
+    -Wcast-align
+    -Wunused
+    -Woverloaded-virtual
+    -Wpedantic
+    -Wconversion
+    -Wsign-conversion
+    -Wmisleading-indentation
+    -Wduplicated-cond
+    -Wduplicated-branches
+    -Wlogical-op
+    -Wnull-dereference
+    -Wuseless-cast
+    -Wdouble-promotion
+    -Wformat=2
+    -Wimplicit-fallthrough
+  )
+endif()
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(THIS_PACKAGE_INCLUDE_DEPENDS
@@ -29,6 +57,10 @@ target_include_directories(${PROJECT_NAME}
     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
            $<INSTALL_INTERFACE:include>)
 
+target_compile_features(${PROJECT_NAME}
+  PRIVATE
+  cxx_std_17
+)
 
 add_executable(${PROJECT_NAME}_node
   src/main.cpp
@@ -38,39 +70,10 @@ target_link_libraries(${PROJECT_NAME}_node ${PROJECT_NAME})
 
 ament_target_dependencies(${PROJECT_NAME} ${THIS_PACKAGE_INCLUDE_DEPENDS})
 
-target_compile_options(${PROJECT_NAME}
-  PRIVATE
-  -Wall
-  -Wextra
-  -Wshadow
-  -Wnon-virtual-dtor
-  -pedantic
-
-  -Wold-style-cast
-  -Wcast-align
-  -Wunused
-  -Woverloaded-virtual
-  -Wpedantic
-  -Wconversion
-  -Wsign-conversion
-  -Wmisleading-indentation
-  -Wduplicated-cond
-  -Wduplicated-branches
-  -Wlogical-op
-  -Wnull-dereference
-  -Wuseless-cast
-  -Wdouble-promotion
-  -Wformat=2
-  -Wimplicit-fallthrough
-)
-
-target_compile_features(${PROJECT_NAME}
+target_compile_features(${PROJECT_NAME}_node
   PRIVATE
   cxx_std_17
 )
-
-ament_target_dependencies(${PROJECT_NAME} ${THIS_PACKAGE_INCLUDE_DEPENDS})
-
 
 #############
 ## Install ##

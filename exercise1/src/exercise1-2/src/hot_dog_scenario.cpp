@@ -46,6 +46,19 @@ void HotDogScenario::applyMustard()
   planning_scene_interface_.applyCollisionObjects({ mustard_ }, hot_dog_colors_);
 }
 
+geometry_msgs::msg::Pose HotDogScenario::getStartPose()
+{
+  geometry_msgs::msg::Pose start_pose;
+  start_pose.orientation.x = 0.0;
+  start_pose.orientation.y = 0.707;
+  start_pose.orientation.z = 0.0;
+  start_pose.orientation.w = 0.707;
+  start_pose.position.x = 0.38;
+  start_pose.position.y = 0.0;  // TODO this will look off until we have a proper gripper
+  start_pose.position.z = 0.15;
+  return start_pose;
+}
+
 moveit_msgs::msg::CollisionObject HotDogScenario::createCollisionObject(const std::string& name,
                                                                         const std::string& mesh_path,
                                                                         const geometry_msgs::msg::Pose& pose)
