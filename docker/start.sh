@@ -26,6 +26,7 @@ docker run \
   --device=/dev/dri \
   --volume=/tmp/.X11-unix:/tmp/.X11-unix \
   --volume=$(pwd):/code \
+  --volume=${XAUTHORITY}:${XAUTHORITY} \
   --ulimit=rtprio=98 \
   --cap-add=SYS_NICE \
   --init \
@@ -34,6 +35,7 @@ docker run \
   -e "QT_X11_NO_MITSHM=1" \
   -e "HOST_UID=$(id -u)" \
   -e "HOST_GID=$(id -g)" \
+  -e "XAUTHORITY=${XAUTHORITY}" \
   --name=$name \
   $name
 

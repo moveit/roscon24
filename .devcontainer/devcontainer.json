@@ -12,6 +12,7 @@
   "runArgs": [
     "--device=/dev/dri", // For AMD devices (not tested)
     "--volume=/tmp/.X11-unix:/tmp/.X11-unix", // Required for graphics
+    "--volume=${localEnv:XAUTHORITY}:${localEnv:XAUTHORITY}", // Required for graphics
     "--memory=16g", // Memory limit
     "--ulimit=rtprio=99", // The maximum realtime priority allowed for the container
   ],
@@ -22,6 +23,7 @@
   "workspaceMount": "source=${localWorkspaceFolder},target=/code,type=bind",
   "overrideCommand": false,
   "containerEnv": {
+    "XAUTHORITY": "${localEnv:XAUTHORITY}",
     "DISPLAY": "${localEnv:DISPLAY}",
     "QT_X11_NO_MITSHM": "1" // Required for QT apps like RViz, otherwise they may freeze
   },
