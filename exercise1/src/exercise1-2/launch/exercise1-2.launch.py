@@ -1,12 +1,6 @@
-import os
-
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
 from launch_ros.actions import Node
-from launch.launch_description_sources import PythonLaunchDescriptionSource
 from moveit_configs_utils import MoveItConfigsBuilder
-
-from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
 
@@ -20,9 +14,9 @@ def generate_launch_description():
 
     # MoveGroupInterface demo executable
     move_group_demo = Node(
-        name="moveit_planning",
-        package="moveit_planning",
-        executable="moveit_planning1-1",
+        name="exercise1_2",
+        package="exercise1-2",
+        executable="exercise1-2_node",
         output="screen",
         parameters=[
             moveit_config.robot_description,

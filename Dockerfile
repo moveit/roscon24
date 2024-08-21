@@ -1,6 +1,7 @@
 FROM ros:jazzy-ros-base
 
 ENV ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
+ENV RCUTILS_COLORIZED_OUTPUT=1
 ENV ROS_DOMAIN_ID=24
 
 RUN set -xe; \
@@ -58,6 +59,7 @@ RUN set -xe; \
       ros-jazzy-moveit-msgs \
       ros-jazzy-shape-msgs \
       ros-jazzy-std-msgs \
+      ros-jazzy-tf2-geometric-msgs \
       # Utility tools
       sudo \
       git \
