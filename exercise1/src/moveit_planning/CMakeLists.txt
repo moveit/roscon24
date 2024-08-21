@@ -6,7 +6,11 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(THIS_PACKAGE_INCLUDE_DEPENDS
   ament_cmake
+  geometric_shapes
+  moveit_msgs
   moveit_ros_planning_interface
+  shape_msgs
+  std_msgs
   rclcpp
 )
 
@@ -74,7 +78,14 @@ install(
     RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
-install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+install(
+  DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME})
+
+install(
+  DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../../../assets/hotdog
+  DESTINATION share/${PROJECT_NAME})
+
 
 ament_export_targets(${PROJECT_NAME}Targets HAS_LIBRARY_TARGET)
 ament_export_dependencies(${THIS_PACKAGE_INCLUDE_DEPENDS})
