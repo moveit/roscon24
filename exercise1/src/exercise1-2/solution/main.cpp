@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
 
     const std::vector<geometry_msgs::msg::Pose> waypoints = hot_dog_scenario.getMustardWaypoints(start_pose);
 
-    // Exercise 1-2 Plan a Caretsian path
+    // Exercise 1-2 Plan a Cartesian path
     moveit_msgs::msg::RobotTrajectory trajectory;
     const double jump_threshold = 0.0;
     const double eef_step = 0.002;
