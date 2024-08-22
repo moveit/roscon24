@@ -20,6 +20,9 @@ int main(int argc, char* argv[])
   hot_dog_scenario.placeHotDog();
   hot_dog_scenario.placeMustardinEE();
 
+  // Create a ROS logger
+  const auto logger = rclcpp::get_logger("exercise1_2");
+
   // Create the MoveGroupInterface
   using moveit::planning_interface::MoveGroupInterface;
   const std::string planning_group{ "ur_manipulator" };
@@ -30,7 +33,14 @@ int main(int argc, char* argv[])
   move_group_interface.setPoseTarget(start_pose);
 
   MoveGroupInterface::Plan start_plan;
-  const bool success = static_cast<bool>(move_group_interface.plan(start_plan));
+  bool success{ false };
+  uint16_t attempts{ 0 };
+  while (!success && attempts < 5)
+  {
+    success = static_cast<bool>(move_group_interface.plan(start_plan));
+    ++attempts;
+  }
+
   if (success)
   {
     move_group_interface.execute(start_plan);
@@ -42,12 +52,26 @@ int main(int argc, char* argv[])
     const double eef_step = 0.002;
 
     moveit_msgs::msg::RobotTrajectory trajectory;
-    double fraction = move_group_interface.computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
+    double fraction;
+    attempts = 0;
+    while (fraction < 1 && attempts < 5)
+    {
+      fraction = move_group_interface.computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
+    }
+
     if (fraction > 0)
     {
       move_group_interface.execute(trajectory);
       hot_dog_scenario.applyMustard();
     }
+    else
+    {
+      RCLCPP_ERROR(logger, "Mustard path planning failed!");
+    }
+  }
+  else
+  {
+    RCLCPP_ERROR(logger, "Move to hot dog planning failed!");
   }
 
   spin_thread.join();
