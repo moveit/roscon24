@@ -67,39 +67,52 @@ geometry_msgs::msg::Pose HotDogScenario::getStartPose()
 std::vector<geometry_msgs::msg::Pose> HotDogScenario::getMustardWaypoints(geometry_msgs::msg::Pose pose)
 {
   std::vector<geometry_msgs::msg::Pose> waypoints;
+  const double x_step{ 0.01 };
+  const double y_step{ 0.02 };
 
   // Waypoint 1
-  pose.position.x += 0.01;
-  pose.position.y += 0.005;
+  pose.position.x += x_step;
+  pose.position.y += y_step / 2;
   waypoints.push_back(pose);
 
   // Waypoint 2
-  pose.position.x += 0.01;
-  pose.position.y -= 0.01;
+  pose.position.x += x_step;
+  pose.position.y -= y_step;
   waypoints.push_back(pose);
 
   // Waypoint 3
-  pose.position.x += 0.01;
-  pose.position.y += 0.01;
+  pose.position.x += x_step;
+  pose.position.y += y_step;
   waypoints.push_back(pose);
 
   // Waypoint 4
-  pose.position.x += 0.01;
-  pose.position.y -= 0.01;
+  pose.position.x += x_step;
+  pose.position.y -= y_step;
   waypoints.push_back(pose);
 
   // Waypoint 5
-  pose.position.x += 0.01;
-  pose.position.y += 0.01;
+  pose.position.x += x_step;
+  pose.position.y += y_step;
   waypoints.push_back(pose);
 
   // Waypoint 6
-  pose.position.x += 0.01;
-  pose.position.y -= 0.01;
+  pose.position.x += x_step;
+  pose.position.y -= y_step;
   waypoints.push_back(pose);
 
-  pose.position.x += 0.01;
-  pose.position.y += 0.005;
+  // Waypoint 7
+  pose.position.x += x_step;
+  pose.position.y += y_step;
+  waypoints.push_back(pose);
+
+  // Waypoint 6
+  pose.position.x += x_step;
+  pose.position.y -= y_step;
+  waypoints.push_back(pose);
+
+  // Waypoint 9
+  pose.position.x += x_step;
+  pose.position.y += y_step / 2;
   waypoints.push_back(pose);
 
   return waypoints;
