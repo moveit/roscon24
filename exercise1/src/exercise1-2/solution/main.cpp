@@ -52,8 +52,12 @@ int main(int argc, char* argv[])
     const double eef_step = 0.002;
 
     moveit_msgs::msg::RobotTrajectory trajectory;
-
-    const double fraction = move_group_interface.computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
+    double fraction;
+    attempts = 0;
+    while (fraction < 1 && attempts < 5)
+    {
+      fraction = move_group_interface.computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
+    }
 
     if (fraction > 0)
     {
