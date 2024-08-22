@@ -59,7 +59,7 @@ RUN set -xe; \
       ros-jazzy-moveit-msgs \
       ros-jazzy-shape-msgs \
       ros-jazzy-std-msgs \
-      ros-jazzy-tf2-geometric-msgs \
+      ros-jazzy-tf2-geometry-msgs \
       # Utility tools
       sudo \
       git \
