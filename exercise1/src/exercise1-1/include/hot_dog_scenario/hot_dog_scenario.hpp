@@ -21,7 +21,6 @@ public:
   // Place the bun and sausage in the scene
   void placeSausage();
 
-  // TODO update with new sausage positions
   static geometry_msgs::msg::Pose getPickPose();
   static geometry_msgs::msg::Pose getPlacePose();
 
