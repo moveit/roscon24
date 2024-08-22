@@ -41,6 +41,7 @@ int main(int argc, char* argv[])
   bool pick_success{ false };
   while (!pick_success && pick_planning_attempts < 5)
   {
+    pick_success = static_cast<bool>(move_group_interface.plan(pick_plan));
     ++pick_planning_attempts;
   }
   if (pick_success)
@@ -59,6 +60,7 @@ int main(int argc, char* argv[])
     bool place_success{ false };
     while (!place_success && place_planning_attempts < 5)
     {
+      place_success = static_cast<bool>(move_group_interface.plan(place_plan));
       ++place_planning_attempts;
     }
 
