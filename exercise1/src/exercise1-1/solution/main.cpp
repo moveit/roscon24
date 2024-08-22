@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
       RCLCPP_ERROR(logger, "Place planning failed!");
     }
 
-    // Exercise 1-1: Detach the hot dog
+    // Detach the hot dog
     move_group_interface.detachObject(sausage.id);
     if (place_success)
     {
