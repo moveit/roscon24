@@ -33,7 +33,6 @@ int main(int argc, char* argv[])
 
   // Exercise 1-1: Move to the pick pose
   // Use the MoveGroupInterface to move to the pick pose
-  move_group_interface.setPoseTarget(pick_pose);
 
   // Create a plan to that target pose
   MoveGroupInterface::Plan pick_plan;
@@ -41,7 +40,6 @@ int main(int argc, char* argv[])
   bool pick_success{ false };
   while (!pick_success && pick_planning_attempts < 5)
   {
-    pick_success = static_cast<bool>(move_group_interface.plan(pick_plan));
     ++pick_planning_attempts;
   }
   if (pick_success)
@@ -52,15 +50,12 @@ int main(int argc, char* argv[])
     const auto& sausage = hot_dog_scenario.getSausage();
 
     // Exercise 1-1: Attach the hot dog to the gripper and plan to the place pose
-    move_group_interface.attachObject(sausage.id);
-    move_group_interface.setPoseTarget(place_pose);
 
     MoveGroupInterface::Plan place_plan;
     uint16_t place_planning_attempts{ 0 };
     bool place_success{ false };
     while (!place_success && place_planning_attempts < 5)
     {
-      place_success = static_cast<bool>(move_group_interface.plan(place_plan));
       ++place_planning_attempts;
     }
 
@@ -74,7 +69,7 @@ int main(int argc, char* argv[])
       RCLCPP_ERROR(logger, "Place planning failed!");
     }
 
-    // Exercise 1-1: Detach the hot dog
+    // Detach the hot dog
     move_group_interface.detachObject(sausage.id);
     if (place_success)
     {
