@@ -37,8 +37,13 @@ int main(int argc, char* argv[])
 
   // Create a plan to that target pose
   MoveGroupInterface::Plan pick_plan;
-  const auto pick_success = static_cast<bool>(move_group_interface.plan(pick_plan));
-
+  uint16_t attempts = 0;
+  bool pick_success = false;
+  while (!pick_success && attempts < 5)
+  {
+    pick_success = static_cast<bool>(move_group_interface.plan(pick_plan));
+    ++attempts;
+  }
   if (pick_success)
   {
     // Execute the plan
@@ -47,12 +52,18 @@ int main(int argc, char* argv[])
     const auto& sausage = hot_dog_scenario.getSausage();
 
     // Exercise 1-1: Attach the hot dog to the gripper and plan to the place pose
-    // TODO we need a gripper
     move_group_interface.attachObject(sausage.id);
     move_group_interface.setPoseTarget(place_pose);
 
     MoveGroupInterface::Plan place_plan;
-    const auto place_success = static_cast<bool>(move_group_interface.plan(place_plan));
+    attempts = 0;
+    bool place_success = false;
+    while (!place_success && attempts < 5)
+    {
+      place_success = static_cast<bool>(move_group_interface.plan(place_plan));
+      ++attempts;
+    }
+
     // Execute the plan
     if (place_success)
     {
@@ -66,10 +77,10 @@ int main(int argc, char* argv[])
     // Exercise 1-1: Detach the hot dog
     move_group_interface.detachObject(sausage.id);
     if (place_success)
-
-      // TODO: consider using ACM to allow robot and sausage bun collisions
+    {
       // Drop the hot dog down into the bun
       hot_dog_scenario.placeSausage();
+    }
   }
   else
   {
