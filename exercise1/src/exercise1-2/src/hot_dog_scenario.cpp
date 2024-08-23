@@ -29,8 +29,8 @@ void HotDogScenario::placeMustardinEE()
   mustard_bottle_.pose = move_group_interface_->getCurrentPose().pose;
 
   // Note that this offset is done in world frame, and thus won't work if the robot start position isn't as expected
-  // This won't be needed if we get a gripper
-  mustard_bottle_.pose.position.y += 0.03;  // TODO: dependent on gripper
+  // This is to simulate the gripper position
+  mustard_bottle_.pose.position.y += 0.03;
 
   // Rotate the mustard bottle to fit into the gripper
   tf2::Quaternion relative_rotation;
@@ -42,7 +42,6 @@ void HotDogScenario::placeMustardinEE()
 
   planning_scene_interface_.applyCollisionObjects({ mustard_bottle_ }, hot_dog_colors_);
 
-  // TODO: Dependent on gripper
   move_group_interface_->attachObject(mustard_bottle_.id, "tool0", { "wrist_3_link" });
 }
 
@@ -59,7 +58,7 @@ geometry_msgs::msg::Pose HotDogScenario::getStartPose()
   start_pose.orientation.z = 0.0;
   start_pose.orientation.w = 0.707;
   start_pose.position.x = 0.5;
-  start_pose.position.y = 0.0;  // TODO this will look off until we have a proper gripper
+  start_pose.position.y = 0.0;
   start_pose.position.z = 0.2;
   return start_pose;
 }
@@ -67,39 +66,52 @@ geometry_msgs::msg::Pose HotDogScenario::getStartPose()
 std::vector<geometry_msgs::msg::Pose> HotDogScenario::getMustardWaypoints(geometry_msgs::msg::Pose pose)
 {
   std::vector<geometry_msgs::msg::Pose> waypoints;
+  const double x_step{ 0.01 };
+  const double y_step{ 0.02 };
 
   // Waypoint 1
-  pose.position.x += 0.01;
-  pose.position.y += 0.005;
+  pose.position.x += x_step;
+  pose.position.y += y_step / 2;
   waypoints.push_back(pose);
 
   // Waypoint 2
-  pose.position.x += 0.01;
-  pose.position.y -= 0.01;
+  pose.position.x += x_step;
+  pose.position.y -= y_step;
   waypoints.push_back(pose);
 
   // Waypoint 3
-  pose.position.x += 0.01;
-  pose.position.y += 0.01;
+  pose.position.x += x_step;
+  pose.position.y += y_step;
   waypoints.push_back(pose);
 
   // Waypoint 4
-  pose.position.x += 0.01;
-  pose.position.y -= 0.01;
+  pose.position.x += x_step;
+  pose.position.y -= y_step;
   waypoints.push_back(pose);
 
   // Waypoint 5
-  pose.position.x += 0.01;
-  pose.position.y += 0.01;
+  pose.position.x += x_step;
+  pose.position.y += y_step;
   waypoints.push_back(pose);
 
   // Waypoint 6
-  pose.position.x += 0.01;
-  pose.position.y -= 0.01;
+  pose.position.x += x_step;
+  pose.position.y -= y_step;
   waypoints.push_back(pose);
 
-  pose.position.x += 0.01;
-  pose.position.y += 0.005;
+  // Waypoint 7
+  pose.position.x += x_step;
+  pose.position.y += y_step;
+  waypoints.push_back(pose);
+
+  // Waypoint 6
+  pose.position.x += x_step;
+  pose.position.y -= y_step;
+  waypoints.push_back(pose);
+
+  // Waypoint 9
+  pose.position.x += x_step;
+  pose.position.y += y_step / 2;
   waypoints.push_back(pose);
 
   return waypoints;

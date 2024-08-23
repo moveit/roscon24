@@ -49,8 +49,10 @@ int main(int argc, char* argv[])
 
     // Exercise 1-2 Plan a Cartesian path
     moveit_msgs::msg::RobotTrajectory trajectory;
+    const double jump_threshold = 0.0;
+    const double eef_step = 0.002;
 
-    const double fraction = 0;
+    const double fraction = move_group_interface.computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
 
     if (fraction > 0)
     {
