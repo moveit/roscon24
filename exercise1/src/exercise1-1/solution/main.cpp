@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
   }
 
   // Shutdown ROS
-  spin_thread.join();
   rclcpp::shutdown();
+  spin_thread.join();
   return 0;
 }

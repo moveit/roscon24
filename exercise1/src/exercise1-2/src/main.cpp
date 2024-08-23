@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
     RCLCPP_ERROR(logger, "Move to hot dog planning failed!");
   }
 
-  spin_thread.join();
   rclcpp::shutdown();
+  spin_thread.join();
   return 0;
 }
