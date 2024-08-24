@@ -8,7 +8,7 @@ Please bring a laptop running Ubuntu 22.04 or Ubuntu 24.04 with Docker installed
 
 To install Docker, see the official Docker instructions to [Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/).
 
-Officially, we test with **Ubuntu 24.04** and **Ubuntu 24.04**.
+Officially, we test with **Ubuntu 22.04** and **Ubuntu 24.04**.
 The Docker setup may be compatible with Mac/Windows, but please note that this is an untested configuration.
 
 ## Workshop Setup
