@@ -27,7 +27,7 @@ Before running exercise 1-1, first source the workspace, then launch the UR:
 
 ```bash
 source install/setup.bash
-ros2 launch exercise 1-1 ur.launch.py
+ros2 launch exercise1-1 ur.launch.py
 ```
 
 You should see an RViz window with the UR.
@@ -36,7 +36,7 @@ Now, you can run exercise 1-1 to try motion planning:
 
 ```bash
 source install/setup.bash
-ros2 launch exercise 1-1 exercise 1-1.launch.py
+ros2 launch exercise1-1 exercise1-1.launch.py
 ```
 
 By default, planning will fail.
@@ -63,7 +63,7 @@ Before running exercise 1-2, first source the workspace, then launch the UR:
 
 ```bash
 source install/setup.bash
-ros2 launch exercise 1-2 ur.launch.py
+ros2 launch exercise1-2 ur.launch.py
 ```
 
 You should see an RViz window with the UR.
@@ -72,7 +72,7 @@ Now, you can run exercise 1-2 to try motion planning:
 
 ```bash
 source install/setup.bash
-ros2 launch exercise 1-12 exercise 1-2.launch.py
+ros2 launch exercise1-2 exercise1-2.launch.py
 ```
 
 By default, planning will fail.
