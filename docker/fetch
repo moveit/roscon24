@@ -1,0 +1,20 @@
+#!/bin/bash
+
+filename=$1
+name=roscon-2024-moveit-workshop
+
+set -e
+
+if [ -n "$filename" ]; then
+  if [ ! -f "$filename" ]; then
+    echo "Error: $filename is not a valid file" >&2
+    exit 1
+  fi
+
+  echo "Trying to import $filename to $name. This should take about a minute."
+  if command -v pv >/dev/null; then
+    pv $filename | zcat | docker load
+  else
+    docker load -i $filename
+  fi
+fi
