@@ -1,6 +1,7 @@
 # Exercise 1
 
 This workspace contains packages to demonstration motion planning using a UR robot assembling a hot dog.
+If you have not already done so, make sure to follow the [setup instructions](../README.md#workshop-setup) to ensure the exercise works on your computer.
 
 ## Basic Usage
 

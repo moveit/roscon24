@@ -20,7 +20,7 @@ If you run into any issues during this process, please file an [issue](https://g
 ### Docker
 
 All workshop exercises will be run from a Docker container.
-Please download the provided image before the workshop begins, as we canot guarantee the network performance at the conference.
+**Please download the provided image before the workshop begins, as we canot guarantee the network performance at the conference.**
 
 Before getting the image, you must have Docker installed on your machine.
 You can install Docker by following [the official instructions](https://docs.docker.com/engine/install/ubuntu/).
