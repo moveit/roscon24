@@ -14,6 +14,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     -Wold-style-cast
     -Wcast-align
     -Wunused
+    -Wno-unused-but-set-variable # Disabled to prevent warnings for unused variables in the unsolved example
     -Woverloaded-virtual
     -Wpedantic
     -Wconversion
