@@ -47,12 +47,10 @@ int main(int argc, char* argv[])
 
     const std::vector<geometry_msgs::msg::Pose> waypoints = hot_dog_scenario.getMustardWaypoints(start_pose);
 
-    // Exercise 1-2 Plan a Cartesian path
+    // Exercise 1-2: Plan a Cartesian path
     moveit_msgs::msg::RobotTrajectory trajectory;
-    const double jump_threshold = 0.0;
-    const double eef_step = 0.002;
 
-    const double fraction = move_group_interface.computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
+    double fraction = move_group_interface.computeCartesianPath(waypoints, 0.002, 0.0, trajectory);
 
     if (fraction > 0)
     {
