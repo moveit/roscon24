@@ -96,7 +96,7 @@ You can then use the VSCode terminal inside the container.
 
 #### Building the Docker Image
 
-For the purposes of the workshop, please use the image provided in [the lastes release](https://github.com/moveit/roscon24/releases).
+For the purposes of the workshop, please use the image provided in [the lastest release](https://github.com/moveit/roscon24/releases).
 
 To build the image, use the `docker/build.sh` script:
 
