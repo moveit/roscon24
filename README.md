@@ -57,10 +57,10 @@ Note: do NOT use `docker import` or `docker load`. Please use the `docker/fetch`
 
 ##### Starting the Docker container
 
-After importing the Docker image, you can start the Docker container via the special shell file `docker/start.sh`. To do this:
+After getting the Docker image, you can start the Docker container via the special shell file `docker/start`. To do this:
 
   1. `cd` into this repository.
-  2. `docker/start.sh`
+  2. `docker/start`
 
 This should start the Docker container and it will mount this repository into the `/code` directory inside the container.
 As a result, changes to the repository in the host will be reflected in the container.
@@ -69,12 +69,12 @@ As a result, changes to the repository in the host will be reflected in the cont
 
 After starting the Docker container, you can login to the Docker container using the special `docker/shell` script:
 
-  1. cd into this repository.
+  1. `cd` into this repository.
   2. `docker/shell`
 
 You should be greeted with something like the following:
 
-```
+```bash
 To run a command as administrator (user "root"), use "sudo <command>".
 See "man sudo_root" for details.
 
@@ -116,4 +116,5 @@ source install/setup.bash
 ros2 launch exercise1-1 ur.launch.py
 ```
 
-This should open an RViz window with the UR visible.
+This should open an RViz window with the UR visible. It should look like this:
+![RViz-with-UR](./images/ur-launch.png)

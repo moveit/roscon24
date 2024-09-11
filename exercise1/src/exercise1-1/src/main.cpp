@@ -28,11 +28,11 @@ int main(int argc, char* argv[])
   MoveGroupInterface move_group_interface(node, planning_group);
 
   // Get predefined poses for pick and place above the sausage and bun respectively
-  const auto pick_pose = hot_dog_scenario.getPickPose();
-  const auto place_pose = hot_dog_scenario.getPlacePose();
+  const geometry_msgs::msg::Pose& pick_pose = hot_dog_scenario.getPickPose();
+  const geometry_msgs::msg::Pose& place_pose = hot_dog_scenario.getPlacePose();
 
-  // Exercise 1-1: Move to the pick pose
-  // Use the MoveGroupInterface to move to the pick pose
+  // TODO(Exercise 1-1): Set the goal pose to the pick pose using MoveGroupInterface
+  // Add your code here
 
   // Create a plan to that target pose
   MoveGroupInterface::Plan pick_plan;
@@ -40,6 +40,8 @@ int main(int argc, char* argv[])
   bool pick_success{ false };
   while (!pick_success && pick_planning_attempts < 5)
   {
+    // TODO(Exercise 1-1): Use MoveGroupInterface to plan to the pick pose and determine planning success
+    // Add your code here
     ++pick_planning_attempts;
   }
   if (pick_success)
@@ -47,15 +49,19 @@ int main(int argc, char* argv[])
     // Execute the plan
     move_group_interface.execute(pick_plan);
 
-    const auto& sausage = hot_dog_scenario.getSausage();
+    const moveit_msgs::msg::CollisionObject& sausage = hot_dog_scenario.getSausage();
 
-    // Exercise 1-1: Attach the hot dog to the gripper and plan to the place pose
+    // TODO(Exercise 1-1): Attach the sausage to the robot and plan to the place pose
+    // Add your code to attach the sausage here
+    // Add your code to set the goal pose here
 
     MoveGroupInterface::Plan place_plan;
     uint16_t place_planning_attempts{ 0 };
     bool place_success{ false };
     while (!place_success && place_planning_attempts < 5)
     {
+      // TODO(Exercise 1-1): Use MoveGroupInterface to plan to the place pose and determine planning success
+      // Add your code here
       ++place_planning_attempts;
     }
 

@@ -47,10 +47,10 @@ int main(int argc, char* argv[])
 
     const std::vector<geometry_msgs::msg::Pose> waypoints = hot_dog_scenario.getMustardWaypoints(start_pose);
 
-    // Exercise 1-2 Plan a Cartesian path
     moveit_msgs::msg::RobotTrajectory trajectory;
 
-    const double fraction = 0;
+    // TODO(Exercise 1-2): Plan a Cartesian path
+    double fraction = 0;
 
     if (fraction > 0)
     {
