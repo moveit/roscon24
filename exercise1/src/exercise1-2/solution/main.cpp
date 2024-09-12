@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
   MoveGroupInterface move_group_interface(node, planning_group);
 
   // A pose just above the bun
-  const auto start_pose = hot_dog_scenario.getStartPose();
+  const auto& start_pose = hot_dog_scenario.getStartPose();
   move_group_interface.setPoseTarget(start_pose);
 
   MoveGroupInterface::Plan start_plan;
