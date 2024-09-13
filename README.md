@@ -24,6 +24,8 @@ All workshop exercises will be run from a Docker container.
 
 Before getting the image, you must have Docker installed on your machine.
 You can install Docker by following [the official instructions](https://docs.docker.com/engine/install/ubuntu/).
+**To use Docker without `sudo`, follow the Docker [post-install instructions](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user).**
+
 At the end, confirm that you see the following output when running the following commands:
 
 ```bash
@@ -40,7 +42,6 @@ Server: Docker Engine - Community
 
 Note that `Version` may be different than the above example output.
 
-To use Docker without `sudo`, follow the Docker [post-install instructions](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)
 
 #### Getting the image BEFORE the workshop
 
