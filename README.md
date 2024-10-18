@@ -1,6 +1,7 @@
 # ROSCon 2024 Workshop: Manipulate With MoveIt Like a Pro
 
 This repository hosts content for the **Manipulate With MoveIt Like a Pro** workshop for ROSCon 2024.
+Slides are available [here](https://docs.google.com/presentation/d/13675SHFyfFz4XR3R147-ZlsOmXZXMar2ysYzTyq1Zig/edit?usp=sharing), with PDF backup [here](./slides.pdf)
 
 ## Workshop Requirements
 
