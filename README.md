@@ -1,7 +1,9 @@
 # ROSCon 2024 Workshop: Manipulate With MoveIt Like a Pro
 
 This repository hosts content for the **Manipulate With MoveIt Like a Pro** workshop for ROSCon 2024.
-Slides are available [here](https://docs.google.com/presentation/d/13675SHFyfFz4XR3R147-ZlsOmXZXMar2ysYzTyq1Zig/edit?usp=sharing), with PDF backup [here](./slides.pdf)
+
+**Thank you to [Stephanie Eng](https://github.com/stephanie-eng/), [Sebastian Jahr](https://github.com/sjahr), and [Henning Kayser](https://github.com/henningkayser) for presenting this workshop, and thank you to [Matt Hansen](https://github.com/mkhansenbot) for his help on developing the workshop conent.
+Slides are available [here](https://docs.google.com/presentation/d/13675SHFyfFz4XR3R147-ZlsOmXZXMar2ysYzTyq1Zig/edit?usp=sharing), with PDF backup [here](./slides.pdf). Thank you for attending!**
 
 ## Workshop Requirements
 
